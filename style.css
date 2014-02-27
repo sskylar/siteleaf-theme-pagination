@@ -100,10 +100,15 @@ a{
 
 /* Pagination */
 
-.pagination ul{
+.pagination{
   border-top: 1px dotted #d4d7d9;
-  margin: 1em 0;
-  padding: 1em 0;
+  margin: 2em 0;
+  padding: 2em 0 0;
+}
+
+.pagination ul{
+  margin: 0;
+  padding: 0;
 }
 
 .pagination li{
@@ -115,6 +120,10 @@ a{
   display: inline-block;
   border: 1px solid #d4d7d9;
   padding: 4px 10px;
+}
+
+.pagination a:not([href]){
+  color: #d4d7d9;
 }
 
 .pagination a.is-current-page{

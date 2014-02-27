@@ -1,17 +1,24 @@
-{% assign max_posts = max_pages | times:per_page %}
+{% assign prev_page = page_num | minus:1 %}
+{% assign next_page = page_num | plus:1 %}
 <nav class="pagination">
   <ul>
+  {% comment %} Create previous link {% endcomment %} 
+    <li><a{% if page_num > 1 %} href="/blog{% if prev_page > 1 %}/page/{{prev_page}}/index.html{% endif %}"{% endif %}>&larr; Newer</a></li>
+    
   {% comment %} Create numbered pagination links {% endcomment %}  
   {% for i in (1..max_pages) %}
     {% assign post_index = i | minus:1 | times:per_page | plus:1 %}
     {% if posts.size >= post_index %}
-    <li><a href="/blog{% if i > 1 %}/page/{{i}}/index.html{% endif %}"{% if page_num == i %} class="is-current-page"{% endif %}>{{i}}</a></li>
+      <li><a href="/blog{% if i > 1 %}/page/{{i}}/index.html{% endif %}"{% if page_num == i %} class="is-current-page"{% endif %}>{{i}}</a></li>
     {% endif %}
   {% endfor %}
   
-  {% comment %} Show archive page if beyond maximum number of pages {% endcomment %}
-  {% if posts.size > max_posts %}
-    <li><a href="{{current.archive_url}}"{% if type == 'archive' %} class="is-current-page"{% endif %}>More</a></li>
+  {% comment %} Create next link, or archive if beyond maximum number of pages {% endcomment %} 
+  {% assign next_page_index = page_num | times:per_page %}
+  {% if next_page <= max_pages %}
+    <li><a{% if posts.size > next_page_index and page_num < next_page %} href="/blog/page/{{next_page}}/index.html"{% endif %}>Older &rarr;</a></li>
+  {% else %}
+    <li><a href="{{current.archive_url}}">Archive &rarr;</a></li>
   {% endif %}
   </ul>
 </nav>
